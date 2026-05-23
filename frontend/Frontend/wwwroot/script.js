@@ -7,5 +7,6 @@ async function loadWeather() {
     const temperature = current.temperature_2m ?? "-";
     const rain = current.rain ?? "-";
 
-    document.getElementById("result").textContent = `Temperatur: ${temperature} °C\nRegen: ${rain} mm`;
+    document.getElementById("temperature").textContent = temperature === "-" ? "-" : `${temperature} °C`;
+    document.getElementById("rain").textContent = rain === "-" ? "-" : `${rain} mm`;
 }

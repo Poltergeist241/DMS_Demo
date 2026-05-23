@@ -3,14 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Weather Lookup</h1>
+    <main class="container">
+        <h1>Weather Lookup</h1>
 
-    <input id="city" placeholder="City name" />
-    <button onclick="loadWeather()">Search</button>
+        <div class="search">
+            <input id="city" placeholder="City name" />
+            <button onclick="loadWeather()">Search</button>
+        </div>
 
-    <pre id="result"></pre>
+        <section class="card" aria-live="polite">
+            <div class="row">
+                <span class="label">Temperatur</span>
+                <span id="temperature" class="value">-</span>
+            </div>
+            <div class="row">
+                <span class="label">Regen</span>
+                <span id="rain" class="value">-</span>
+            </div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
