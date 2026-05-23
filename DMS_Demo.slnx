@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="services/BackendForFrontend/BackendForFrontend.csproj" />
+  <Project Path="services/GeocodingService/GeocodingService.csproj" />
+  <Project Path="services/WeatherService/WeatherService.csproj" />
+</Solution>
