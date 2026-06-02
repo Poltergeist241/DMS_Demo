@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/Tests/">
+    <Project Path="tests/BackendForFrontend.Tests/BackendForFrontend.Tests.csproj" Id="d8111ea5-101f-4db8-8bb4-63e170ffbc77" />
+    <Project Path="tests/GeocodingService.Tests/GeocodingService.Tests.csproj" Id="8f6de9cc-bc4a-4f36-b6dc-a3207c018bbc" />
+    <Project Path="tests/WeatherService.Tests/WeatherService.Tests.csproj" Id="290a2d75-1cde-4428-ba46-4da767c89191" />
+  </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
