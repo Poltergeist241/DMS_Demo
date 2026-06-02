@@ -1,0 +1,31 @@
+trigger:
+  branches:
+    include:
+      - master
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  buildConfiguration: Release
+  projectPath: services/WeatherService/WeatherService.csproj
+
+steps:
+  - task: UseDotNet@2
+    displayName: Use .NET 10 SDK
+    inputs:
+      packageType: sdk
+      version: 10.0.x
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore WeatherService
+    inputs:
+      command: restore
+      projects: $(projectPath)
+
+  - task: DotNetCoreCLI@2
+    displayName: Build WeatherService
+    inputs:
+      command: build
+      projects: $(projectPath)
+      arguments: --configuration $(buildConfiguration)
