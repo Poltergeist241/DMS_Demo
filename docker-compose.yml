@@ -1,6 +1,7 @@
 services:
   weatherservice:
     container_name: weatherservice
+    image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/weatherservice:latest
     build:
       context: .
       dockerfile: services/WeatherService/Dockerfile
@@ -11,6 +12,7 @@ services:
 
   geocodingservice:
     container_name: geocodingservice
+    image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/geocodingservice:latest
     build:
       context: .
       dockerfile: services/GeocodingService/Dockerfile
@@ -21,6 +23,7 @@ services:
 
   backendforfrontend:
     container_name: backendforfrontend
+    image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/backendforfrontend:latest
     build:
       context: .
       dockerfile: services/BackendForFrontend/Dockerfile
@@ -37,6 +40,7 @@ services:
 
   frontend:
     container_name: frontend
+    image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/frontend:latest
     build:
       context: .
       dockerfile: frontend/Frontend/Dockerfile

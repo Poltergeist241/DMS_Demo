@@ -1,28 +1,27 @@
 parameters:
   - name: displayName
     type: string
-  - name: projectPath
+  - name: repository
     type: string
-  - name: sdkVersion
+  - name: dockerfile
     type: string
-    default: 10.0.x
+  - name: buildContext
+    type: string
+    default: .
+  - name: containerRegistry
+    type: string
+    default: acr-connection
 
 steps:
-  - task: UseDotNet@2
-    displayName: Use .NET ${{ parameters.sdkVersion }} SDK
+  - task: Docker@2
+    displayName: Build and push ${{ parameters.displayName }}
     inputs:
-      packageType: sdk
-      version: ${{ parameters.sdkVersion }}
-
-  - task: DotNetCoreCLI@2
-    displayName: Restore ${{ parameters.displayName }}
-    inputs:
-      command: restore
-      projects: ${{ parameters.projectPath }}
-
-  - task: DotNetCoreCLI@2
-    displayName: Build ${{ parameters.displayName }}
-    inputs:
-      command: build
-      projects: ${{ parameters.projectPath }}
-      arguments: --configuration $(buildConfiguration)
+      command: buildAndPush
+      containerRegistry: ${{ parameters.containerRegistry }}
+      repository: ${{ parameters.repository }}
+      dockerfile: ${{ parameters.dockerfile }}
+      buildContext: ${{ parameters.buildContext }}
+      tags: |
+        latest
+        $(Build.BuildId)
+      arguments: --build-arg BUILD_CONFIGURATION=$(buildConfiguration)

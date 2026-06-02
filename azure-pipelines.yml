@@ -8,6 +8,8 @@ pool:
 
 variables:
   buildConfiguration: Release
+  acrLoginServer: weatherplatformregistry.azurecr.io
+  acrServiceConnection: acr-connection
 
 jobs:
   - job: Build_BackendForFrontend
@@ -16,7 +18,9 @@ jobs:
       - template: azure-pipelines/build.yml
         parameters:
           displayName: BackendForFrontend
-          projectPath: services/BackendForFrontend/BackendForFrontend.csproj
+          repository: backendforfrontend
+          dockerfile: services/BackendForFrontend/Dockerfile
+          containerRegistry: $(acrServiceConnection)
 
   - job: Build_Frontend
     displayName: Build Frontend
@@ -24,7 +28,9 @@ jobs:
       - template: azure-pipelines/build.yml
         parameters:
           displayName: Frontend
-          projectPath: frontend/Frontend/Frontend.csproj
+          repository: frontend
+          dockerfile: frontend/Frontend/Dockerfile
+          containerRegistry: $(acrServiceConnection)
 
   - job: Build_GeocodingService
     displayName: Build GeocodingService
@@ -32,7 +38,9 @@ jobs:
       - template: azure-pipelines/build.yml
         parameters:
           displayName: GeocodingService
-          projectPath: services/GeocodingService/GeocodingService.csproj
+          repository: geocodingservice
+          dockerfile: services/GeocodingService/Dockerfile
+          containerRegistry: $(acrServiceConnection)
 
   - job: Build_WeatherService
     displayName: Build WeatherService
@@ -40,7 +48,9 @@ jobs:
       - template: azure-pipelines/build.yml
         parameters:
           displayName: WeatherService
-          projectPath: services/WeatherService/WeatherService.csproj
+          repository: weatherservice
+          dockerfile: services/WeatherService/Dockerfile
+          containerRegistry: $(acrServiceConnection)
 
   - job: Deploy_Containers
     displayName: Deploy with Docker Compose
@@ -53,3 +63,5 @@ jobs:
       - template: azure-pipelines/deploy-compose.yml
         parameters:
           composeFile: docker-compose.yml
+          containerRegistry: $(acrServiceConnection)
+          registryLoginServer: $(acrLoginServer)

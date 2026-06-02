@@ -5,13 +5,25 @@ parameters:
   - name: workingDirectory
     type: string
     default: $(Build.SourcesDirectory)
+  - name: containerRegistry
+    type: string
+    default: acr-connection
+  - name: registryLoginServer
+    type: string
 
 steps:
+  - task: Docker@2
+    displayName: Login to registry
+    inputs:
+      command: login
+      containerRegistry: ${{ parameters.containerRegistry }}
+
   - task: PowerShell@2
     displayName: Deploy with Docker Compose
     inputs:
       targetType: inline
       workingDirectory: ${{ parameters.workingDirectory }}
       script: |
-        docker compose -f ${{ parameters.composeFile }} down --remove-orphans
-        docker compose -f ${{ parameters.composeFile }} up -d --build --remove-orphans
+        $env:ACR_LOGIN_SERVER = '${{ parameters.registryLoginServer }}'
+        docker compose -f ${{ parameters.composeFile }} pull
+        docker compose -f ${{ parameters.composeFile }} up -d --remove-orphans
