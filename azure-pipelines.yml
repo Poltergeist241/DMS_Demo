@@ -1,13 +1,26 @@
+trigger:
+- main
+
 stages:
 - stage: Build
+  displayName: Build Microservices
   jobs:
   - job: BuildAll
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - template: azure-pipelines/build-weather.yml
     - template: azure-pipelines/build-air.yml
     - template: azure-pipelines/build-aggregator.yml
+    - template: azure-pipelines/docker-build.yml
+    - template: azure-pipelines/docker-push.yml
+
 - stage: Deploy
+  displayName: Deploy via Docker Compose
+  dependsOn: Build
   jobs:
   - job: DeployCompose
+    pool:
+      name: Default   # dein self-hosted Agent
     steps:
     - template: azure-pipelines/deploy-compose.yml
