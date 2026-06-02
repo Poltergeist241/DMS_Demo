@@ -1,2 +1,43 @@
-stages:
-- template: azure-pipelines/build-weather.yml
+trigger:
+  branches:
+    include:
+      - master
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  buildConfiguration: Release
+
+jobs:
+  - job: Build_BackendForFrontend
+    displayName: Build BackendForFrontend
+    steps:
+      - template: azure-pipelines/build.yml
+        parameters:
+          displayName: BackendForFrontend
+          projectPath: services/BackendForFrontend/BackendForFrontend.csproj
+
+  - job: Build_Frontend
+    displayName: Build Frontend
+    steps:
+      - template: azure-pipelines/build.yml
+        parameters:
+          displayName: Frontend
+          projectPath: frontend/Frontend/Frontend.csproj
+
+  - job: Build_GeocodingService
+    displayName: Build GeocodingService
+    steps:
+      - template: azure-pipelines/build.yml
+        parameters:
+          displayName: GeocodingService
+          projectPath: services/GeocodingService/GeocodingService.csproj
+
+  - job: Build_WeatherService
+    displayName: Build WeatherService
+    steps:
+      - template: azure-pipelines/build.yml
+        parameters:
+          displayName: WeatherService
+          projectPath: services/WeatherService/WeatherService.csproj

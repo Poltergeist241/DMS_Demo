@@ -1,0 +1,28 @@
+parameters:
+  - name: displayName
+    type: string
+  - name: projectPath
+    type: string
+  - name: sdkVersion
+    type: string
+    default: 10.0.x
+
+steps:
+  - task: UseDotNet@2
+    displayName: Use .NET ${{ parameters.sdkVersion }} SDK
+    inputs:
+      packageType: sdk
+      version: ${{ parameters.sdkVersion }}
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore ${{ parameters.displayName }}
+    inputs:
+      command: restore
+      projects: ${{ parameters.projectPath }}
+
+  - task: DotNetCoreCLI@2
+    displayName: Build ${{ parameters.displayName }}
+    inputs:
+      command: build
+      projects: ${{ parameters.projectPath }}
+      arguments: --configuration $(buildConfiguration)
