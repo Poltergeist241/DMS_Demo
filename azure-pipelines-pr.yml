@@ -1,0 +1,20 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - master
+
+pool:
+  name: Default
+
+variables:
+  buildConfiguration: Release
+
+jobs:
+  - job: Validate_Tests_And_Build
+    displayName: Validate tests and build
+    steps:
+      - template: azure-pipelines/test.yml
+        parameters:
+          projects: tests/**/*.csproj
