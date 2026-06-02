@@ -4,7 +4,7 @@ trigger:
       - master
 
 pool:
-  vmImage: windows-latest
+  name: Default
 
 variables:
   buildConfiguration: Release
@@ -41,3 +41,15 @@ jobs:
         parameters:
           displayName: WeatherService
           projectPath: services/WeatherService/WeatherService.csproj
+
+  - job: Deploy_Containers
+    displayName: Deploy with Docker Compose
+    dependsOn:
+      - Build_BackendForFrontend
+      - Build_Frontend
+      - Build_GeocodingService
+      - Build_WeatherService
+    steps:
+      - template: azure-pipelines/deploy-compose.yml
+        parameters:
+          composeFile: docker-compose.yml

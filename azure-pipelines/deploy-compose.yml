@@ -1,0 +1,17 @@
+parameters:
+  - name: composeFile
+    type: string
+    default: docker-compose.yml
+  - name: workingDirectory
+    type: string
+    default: $(Build.SourcesDirectory)
+
+steps:
+  - task: PowerShell@2
+    displayName: Deploy with Docker Compose
+    inputs:
+      targetType: inline
+      workingDirectory: ${{ parameters.workingDirectory }}
+      script: |
+        docker compose -f ${{ parameters.composeFile }} down --remove-orphans
+        docker compose -f ${{ parameters.composeFile }} up -d --build --remove-orphans
