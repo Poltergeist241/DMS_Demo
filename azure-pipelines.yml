@@ -1,2 +1,13 @@
 stages:
-- template: azure-pipelines/build-weather.yml
+- stage: Build
+  jobs:
+  - job: BuildAll
+    steps:
+    - template: azure-pipelines/build-weather.yml
+    - template: azure-pipelines/build-air.yml
+    - template: azure-pipelines/build-aggregator.yml
+- stage: Deploy
+  jobs:
+  - job: DeployCompose
+    steps:
+    - template: azure-pipelines/deploy-compose.yml
