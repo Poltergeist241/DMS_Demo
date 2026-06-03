@@ -3,6 +3,9 @@ trigger:
     include:
       - master
 
+pr: none
+
+
 pool:
   name: Default
 
