@@ -2,9 +2,9 @@ services:
   weatherservice:
     container_name: weatherservice
     image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/weatherservice:latest
-    build:
-      context: .
-      dockerfile: services/WeatherService/Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: services/WeatherService/Dockerfile
     ports:
       - "8081:8080"
     networks:
@@ -13,9 +13,9 @@ services:
   geocodingservice:
     container_name: geocodingservice
     image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/geocodingservice:latest
-    build:
-      context: .
-      dockerfile: services/GeocodingService/Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: services/GeocodingService/Dockerfile
     ports:
       - "8082:8080"
     networks:
@@ -24,9 +24,9 @@ services:
   backendforfrontend:
     container_name: backendforfrontend
     image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/backendforfrontend:latest
-    build:
-      context: .
-      dockerfile: services/BackendForFrontend/Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: services/BackendForFrontend/Dockerfile
     ports:
       - "8085:8080"
     environment:
@@ -41,9 +41,9 @@ services:
   frontend:
     container_name: frontend
     image: ${ACR_LOGIN_SERVER:-weatherplatformregistry.azurecr.io}/frontend:latest
-    build:
-      context: .
-      dockerfile: frontend/Frontend/Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: frontend/Frontend/Dockerfile
     ports:
       - "8080:8080"
     environment:
