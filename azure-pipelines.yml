@@ -5,7 +5,6 @@ trigger:
 
 pr: none
 
-
 pool:
   name: Default
 
